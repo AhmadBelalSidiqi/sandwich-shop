@@ -7,12 +7,14 @@ public class Main {
         // Declaring Variables
         int sandwichSize;
         int userAge;
-        double  total;
+        boolean loaded;
+        double loadedPrice;
+        double total;
         double sandwichPrice;
         double discount;
         Scanner scanner = new Scanner(System.in);
 
-        // Input for Sandwich Size.
+        // Display  menu get user Sandwich Size.
         String menu = """
                 Please Enter 1 or 2 for the size of the sandwich:
                 1: Regular: base price $5.45
@@ -21,22 +23,40 @@ public class Main {
         System.out.print(menu);
         sandwichSize = Integer.parseInt(scanner.nextLine());
 
-        // Input for user Age.
+        // Get user's preference for loaded Sandwich
+        loaded = false;
+        System.out.println("would u like 'loaded' sandwich (yes/no)");
+        String userInput = scanner.nextLine();
+        if (userInput.equals("yes")) {
+            loaded = true;
+        }
+
+
+        // Get user's age for discount.
         System.out.println("Please enter you age :");
         userAge = Integer.parseInt(scanner.nextLine());
 
-        // Using if else to determining the sandwich price
+        // get sandwich price based on  size
         if (sandwichSize == 1) sandwichPrice = 5.45;
         else sandwichPrice = 8.95;
 
+        // Apply discount: 10% for age 18 or under, 20% for 65 and older
+        discount = 0;
+        if (userAge < 18) discount = 0.10;
+        else if (userAge > 64) discount = 0.20;
 
-        // Using if else to determining the user age for the discount.
-        if (userAge > 18) discount = 0.10;
-        else discount = 0.20;
+        // Apply additional cost of loaded Sandwich if applicable- $1 for regular and $1.75 for large
+        loadedPrice=0;
+        if (loaded) {
+            if (sandwichSize == 1)
+                loadedPrice = 1;
+            else
+                loadedPrice = 1.75;
 
-        // Calculation total and displaying it.
-        total = sandwichPrice-(sandwichPrice*discount);
-        System.out.printf("Your total is %.2f",total);
+        }
+        // Calculation total price and displaying it.
+        total = sandwichPrice - (sandwichPrice * discount) + loadedPrice;
+        System.out.printf("Your total is %.2f", total);
 
 
     }
